@@ -53,13 +53,14 @@ export default function Dropdown({ id, name, value, options, onChange, className
     <div ref={root} className={`relative ${className}`} onKeyDown={key}>
       {name && <input ref={hidden} type="hidden" name={name} defaultValue={value} />}
       <button id={bid} type="button" role="combobox" aria-haspopup="listbox" aria-expanded={open} aria-controls={`${bid}-list`} aria-label={ariaLabel}
+        aria-activedescendant={open && options[act] ? `${bid}-o${act}` : undefined}
         onClick={() => (open ? setOpen(false) : show())}
         className="flex min-h-11 w-full items-center justify-between gap-2 rounded-xl border-2 border-fiesta-navy/20 bg-white px-3 text-left text-sm font-semibold text-fiesta-navy outline-none transition hover:border-fiesta-navy/50 focus-visible:border-fiesta-blue focus-visible:ring-4 focus-visible:ring-fiesta-blue/20 aria-expanded:border-fiesta-blue">
         <span className="min-w-0 flex-1 truncate">{options[cur]?.t}</span>
         <KitIcon name="arrow" className={`h-4 w-4 shrink-0 text-fiesta-blue transition ${open ? "-rotate-90" : "rotate-90"}`} />
       </button>
       {open && (
-        <ul ref={list} id={`${bid}-list`} role="listbox" aria-activedescendant={`${bid}-o${act}`} tabIndex={-1}
+        <ul ref={list} id={`${bid}-list`} role="listbox" tabIndex={-1}
           className="absolute right-0 z-40 mt-1.5 max-h-72 w-max min-w-full max-w-[min(32rem,calc(100vw-2rem))] overflow-auto rounded-xl border-2 border-fiesta-navy/15 bg-white p-1.5 shadow-xl">
           {options.map((o, i) => (
             <li key={o.v} id={`${bid}-o${i}`} role="option" aria-selected={o.v === value}
